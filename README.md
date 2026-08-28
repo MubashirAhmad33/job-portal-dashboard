@@ -1,75 +1,184 @@
-# React + TypeScript + Vite
+# Job Portal Admin Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern admin dashboard for managing a job portal platform, including candidates, employers, job listings, applications, reports, notifications, and system settings.
 
-Currently, two official plugins are available:
+## Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+This project provides a clean, responsive, and scalable admin interface for recruitment and hiring operations. It enables administrators to monitor platform activity, review job posts, manage employer and candidate records, approve or reject applications, and control core platform configuration.
 
-## React Compiler
+## Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Dashboard
 
-## Expanding the ESLint configuration
+- Platform overview and KPI cards
+- Candidate, employer, job, and application statistics
+- Recent activity feed
+- Recruitment and growth analytics
+- Interactive charts for trend analysis
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Candidate Management
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- Search and filter candidates
+- View full profiles and resumes
+- Track education, experience, and skills
+- Activate, deactivate, or delete accounts
+- Manage candidate applications
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Employer Management
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- Review company profiles and verification status
+- Approve, reject, suspend, or delete employers
+- Manage company data and account status
+- Monitor employer activity
 
+### Job Management
+
+- Create, edit, approve, publish, reject, and delete jobs
+- Filter by status, category, and location
+- Search jobs by title or employer
+- Manage featured and expired listings
+
+### Application Management
+
+- Review applicant records and job matches
+- Update application statuses
+- View candidate and employer details
+- Filter applications by stage or status
+
+### Reports & Analytics
+
+- Candidate registrations over time
+- Employer registrations
+- Job posting trends
+- Applications by status
+- Jobs by category and location
+- Export-ready data views
+
+### Admin Controls
+
+- Admin login and protected routes
+- Role-based access control
+- Notification center
+- Profile management
+- System settings configuration
+
+## Tech Stack
+
+- Frontend: React + TypeScript + Vite
+- Styling: Tailwind CSS
+- Routing: React Router
+- Data Fetching: TanStack Query
+- Form Validation: React Hook Form + Zod
+- Charts: Recharts
+- State Management: Redux Toolkit
+- Icons: Lucide React and React Icons
+- Backend (planned): Node.js + Express + TypeScript
+- Database (planned): PostgreSQL + Prisma
+- Authentication (planned): JWT + bcrypt
+
+## Project Structure
+
+```text
+job-portal-admin-dashboard/
+├── src/
+│   ├── app/
+│   ├── components/
+│   ├── features/
+│   ├── hooks/
+│   ├── lib/
+│   ├── routes/
+│   ├── store/
+│   ├── styles/
+│   ├── App.tsx
+│   └── main.tsx
+├── public/
+├── package.json
+├── tsconfig.json
+├── vite.config.ts
+├── eslint.config.js
+├── index.html
+├── README.md
+└── .gitignore
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Getting Started
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Prerequisites
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- Node.js 18+
+- npm or yarn
+- Git
 
+### Installation
+
+```bash
+git clone <repository-url>
+cd job-portal-admin-dashboard
+npm install
 ```
+
+### Run the app locally
+
+```bash
+npm run dev
+```
+
+Then open:
+
+```text
+http://localhost:5173
+```
+
+## Environment Variables
+
+Create a `.env` file in the project root if needed for API config and secrets.
+
+Example:
+
+```env
+VITE_API_BASE_URL=http://localhost:5000/api
+VITE_APP_NAME=Job Portal Admin Dashboard
+```
+
+## Available Scripts
+
+```bash
+npm run dev
+npm run build
+npm run preview
+npm run lint
+```
+
+## Admin Login Flow
+
+The admin experience is built around protected routes and role-based access. After authentication, administrators are redirected to the dashboard and gain access to management modules based on their permission level.
+
+## Responsive Design
+
+The interface is designed to work across desktop, tablet, and mobile devices with flexible layouts, collapsible navigation, and adaptive data tables.
+
+## Security Considerations
+
+- Protected admin routes
+- Secure authentication patterns
+- Role-based authorization
+- Validation for user input
+- Environment-based configuration
+- Safe handling of sensitive details
+
+## Roadmap
+
+- Complete dashboard UI and analytics
+- Add admin authentication and protected routing
+- Add backend API and database integration
+- Implement CRUD operations for candidates, employers, jobs, and applications
+- Add reports, notifications, and administrative settings
+- Add tests and documentation
+
+## License
+
+This project is licensed under the MIT License.
+
+## Author
+
+Job Portal Admin Dashboard Project
