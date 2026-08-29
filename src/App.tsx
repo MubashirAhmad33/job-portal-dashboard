@@ -273,7 +273,7 @@ function App() {
                 <div className="mb-4 flex items-center justify-between">
                   <h2 className="text-lg font-semibold text-slate-900">Notifications</h2>
                   <button type="button" className="text-sm font-medium text-violet-600">
-                    Mark all read
+                    Mark all read || mark all done
                   </button>
                 </div>
 
