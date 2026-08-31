@@ -4,17 +4,29 @@ import { Menu } from 'lucide-react'
 import { AdminSidebar } from './AdminSidebar'
 import { TopNavbar } from './TopNavbar'
 
+type PageType = 'dashboard' | 'candidates' | 'employers' | 'jobs' | 'applications' | 'reports' | 'locations' | 'settings'
+
 interface AdminLayoutProps {
     children: ReactNode
+    currentPage: PageType
+    onPageChange: (page: PageType) => void
 }
 
-export function AdminLayout({ children }: AdminLayoutProps) {
+export function AdminLayout({ children, currentPage, onPageChange }: AdminLayoutProps) {
     const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false)
 
     return (
         <div className="min-h-screen bg-slate-100 text-slate-900">
             <div className="flex h-screen overflow-hidden">
-                <AdminSidebar mobileOpen={mobileSidebarOpen} onClose={() => setMobileSidebarOpen(false)} />
+                <AdminSidebar
+                    mobileOpen={mobileSidebarOpen}
+                    onClose={() => setMobileSidebarOpen(false)}
+                    currentPage={currentPage}
+                    onPageChange={(page) => {
+                        onPageChange(page)
+                        setMobileSidebarOpen(false)
+                    }}
+                />
 
                 <div className="flex min-w-0 flex-1 flex-col">
                     <header className="border-b border-slate-200 bg-white/80 px-4 py-3 backdrop-blur-sm lg:hidden">

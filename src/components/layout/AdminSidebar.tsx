@@ -12,15 +12,23 @@ import {
 } from 'lucide-react'
 import { clsx } from 'clsx'
 
-const navigationItems = [
-    { label: 'Dashboard', icon: LayoutDashboard, active: true },
-    { label: 'Candidates', icon: Users },
-    { label: 'Employers', icon: Building2 },
-    { label: 'Jobs', icon: BriefcaseBusiness },
-    { label: 'Applications', icon: FileText },
-    { label: 'Reports', icon: MessageSquareText },
-    { label: 'Locations', icon: MapPin },
-    { label: 'Settings', icon: Settings },
+type PageType = 'dashboard' | 'candidates' | 'employers' | 'jobs' | 'applications' | 'reports' | 'locations' | 'settings'
+
+interface NavigationItem {
+    label: string
+    icon: any
+    page: PageType
+}
+
+const navigationItems: NavigationItem[] = [
+    { label: 'Dashboard', icon: LayoutDashboard, page: 'dashboard' },
+    { label: 'Candidates', icon: Users, page: 'candidates' },
+    { label: 'Employers', icon: Building2, page: 'employers' },
+    { label: 'Jobs', icon: BriefcaseBusiness, page: 'jobs' },
+    { label: 'Applications', icon: FileText, page: 'applications' },
+    { label: 'Reports', icon: MessageSquareText, page: 'reports' },
+    { label: 'Locations', icon: MapPin, page: 'locations' },
+    { label: 'Settings', icon: Settings, page: 'settings' },
 ]
 
 const utilityItems = [{ label: 'Security Center', icon: ShieldCheck }]
@@ -28,9 +36,11 @@ const utilityItems = [{ label: 'Security Center', icon: ShieldCheck }]
 interface AdminSidebarProps {
     mobileOpen: boolean
     onClose: () => void
+    currentPage: PageType
+    onPageChange: (page: PageType) => void
 }
 
-export function AdminSidebar({ mobileOpen, onClose }: AdminSidebarProps) {
+export function AdminSidebar({ mobileOpen, onClose, currentPage, onPageChange }: AdminSidebarProps) {
     return (
         <>
             <aside
@@ -62,13 +72,14 @@ export function AdminSidebar({ mobileOpen, onClose }: AdminSidebarProps) {
                     </div>
 
                     <nav className="mt-3 flex-1 space-y-1 px-3">
-                        {navigationItems.map(({ label, icon: Icon, active }) => (
+                        {navigationItems.map(({ label, icon: Icon, page }) => (
                             <button
                                 key={label}
                                 type="button"
+                                onClick={() => onPageChange(page)}
                                 className={clsx(
                                     'flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-sm font-medium transition-colors',
-                                    active
+                                    currentPage === page
                                         ? 'bg-violet-500/15 text-violet-100 ring-1 ring-violet-500/30'
                                         : 'text-slate-300 hover:bg-slate-800 hover:text-white',
                                 )}
