@@ -1,28 +1,16 @@
-import { useState } from 'react'
-import { AdminLayout } from './components/layout/AdminLayout'
-import { DashboardPage } from './pages/admin/DashboardPage'
-import { CandidatesPage } from './pages/admin/CandidatesPage'
+import React from 'react'
+import './styles/globals.css'
 
-type PageType = 'dashboard' | 'candidates' | 'employers' | 'jobs' | 'applications' | 'reports' | 'locations' | 'settings'
-
-function App() {
-  const [currentPage, setCurrentPage] = useState<PageType>('dashboard')
-
-  const renderPage = () => {
-    switch (currentPage) {
-      case 'dashboard':
-        return <DashboardPage />
-      case 'candidates':
-        return <CandidatesPage />
-      default:
-        return <DashboardPage />
-    }
-  }
-
+const App: React.FC = () => {
   return (
-    <AdminLayout currentPage={currentPage} onPageChange={setCurrentPage}>
-      {renderPage()}
-    </AdminLayout>
+    <div className="min-h-screen bg-slate-50">
+      <div className="container mx-auto p-8">
+        <h1 className="text-4xl font-bold text-slate-900">Job Portal Admin Dashboard</h1>
+        <p className="mt-4 text-lg text-slate-600">
+          Welcome to your clean application. Start building your features here.
+        </p>
+      </div>
+    </div>
   )
 }
 
