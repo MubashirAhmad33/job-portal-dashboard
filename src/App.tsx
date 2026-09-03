@@ -43,6 +43,19 @@ const FEATURED_JOBS: Job[] = [
 const App: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('')
   const [locationTerm, setLocationTerm] = useState('')
+  const normalizedSearch = searchTerm.trim().toLowerCase()
+  const normalizedLocation = locationTerm.trim().toLowerCase()
+  const filteredJobs = FEATURED_JOBS.filter((job) => {
+    const matchesSearch = normalizedSearch.length === 0 || [
+      job.title,
+      job.company,
+      ...job.tags,
+    ].some((value) => value.toLowerCase().includes(normalizedSearch))
+    const matchesLocation = normalizedLocation.length === 0 ||
+      job.location.toLowerCase().includes(normalizedLocation)
+
+    return matchesSearch && matchesLocation
+  })
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 flex flex-col justify-between">
@@ -83,7 +96,10 @@ const App: React.FC = () => {
             </p>
 
             {/* Search Bar */}
-            <div className="mt-8 bg-white p-3 rounded-xl shadow-lg flex flex-col md:flex-row gap-3">
+            <form
+              className="mt-8 bg-white p-3 rounded-xl shadow-lg flex flex-col md:flex-row gap-3"
+              onSubmit={(event) => event.preventDefault()}
+            >
               <input
                 type="text"
                 placeholder="Job title, keywords, or company"
@@ -98,10 +114,13 @@ const App: React.FC = () => {
                 onChange={(e) => setLocationTerm(e.target.value)}
                 className="flex-1 px-4 py-3 rounded-lg text-slate-800 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
-              <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-3 rounded-lg transition">
+              <button
+                type="submit"
+                className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-3 rounded-lg transition"
+              >
                 Search
               </button>
-            </div>
+            </form>
           </div>
         </section>
 
@@ -110,45 +129,57 @@ const App: React.FC = () => {
           <div className="flex justify-between items-end mb-8">
             <div>
               <h2 className="text-3xl font-bold text-slate-900">Featured Jobs</h2>
-              <p className="text-slate-600 mt-1">Explore top opportunities curated for you</p>
+              <p className="text-slate-600 mt-1">
+                {filteredJobs.length} {filteredJobs.length === 1 ? 'opportunity' : 'opportunities'}
+                {' '}matching your search
+              </p>
             </div>
             <a href="#all-jobs" className="text-blue-600 font-semibold hover:underline">
               View all jobs &rarr;
             </a>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {FEATURED_JOBS.map((job) => (
-              <div
-                key={job.id}
-                className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:shadow-md transition flex flex-col justify-between"
-              >
-                <div>
-                  <div className="flex justify-between items-start">
-                    <span className="text-xs font-semibold px-2.5 py-1 bg-blue-50 text-blue-700 rounded-full">
-                      {job.type}
-                    </span>
-                    <span className="text-sm font-medium text-slate-500">{job.salary}</span>
-                  </div>
-                  <h3 className="text-xl font-bold text-slate-900 mt-4">{job.title}</h3>
-                  <p className="text-slate-600 font-medium">{job.company}</p>
-                  <p className="text-sm text-slate-400 mt-1">{job.location}</p>
-
-                  <div className="flex flex-wrap gap-2 mt-4">
-                    {job.tags.map((tag, idx) => (
-                      <span key={idx} className="text-xs bg-slate-100 text-slate-600 px-2.5 py-1 rounded">
-                        {tag}
+          {filteredJobs.length > 0 ? (
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {filteredJobs.map((job) => (
+                <div
+                  key={job.id}
+                  className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:shadow-md transition flex flex-col justify-between"
+                >
+                  <div>
+                    <div className="flex justify-between items-start">
+                      <span className="text-xs font-semibold px-2.5 py-1 bg-blue-50 text-blue-700 rounded-full">
+                        {job.type}
                       </span>
-                    ))}
-                  </div>
-                </div>
+                      <span className="text-sm font-medium text-slate-500">{job.salary}</span>
+                    </div>
+                    <h3 className="text-xl font-bold text-slate-900 mt-4">{job.title}</h3>
+                    <p className="text-slate-600 font-medium">{job.company}</p>
+                    <p className="text-sm text-slate-400 mt-1">{job.location}</p>
 
-                <button className="mt-6 w-full py-2 px-4 border border-blue-600 text-blue-600 font-semibold rounded-lg hover:bg-blue-50 transition">
-                  Apply Now
-                </button>
-              </div>
-            ))}
-          </div>
+                    <div className="flex flex-wrap gap-2 mt-4">
+                      {job.tags.map((tag, idx) => (
+                        <span key={idx} className="text-xs bg-slate-100 text-slate-600 px-2.5 py-1 rounded">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <button className="mt-6 w-full py-2 px-4 border border-blue-600 text-blue-600 font-semibold rounded-lg hover:bg-blue-50 transition">
+                    Apply Now
+                  </button>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="bg-white border border-dashed border-slate-300 rounded-xl px-6 py-12 text-center">
+              <h3 className="text-xl font-bold text-slate-900">No jobs found</h3>
+              <p className="text-slate-600 mt-2">
+                Try a different title, skill, company, or location.
+              </p>
+            </div>
+          )}
         </section>
       </main>
 
