@@ -1,12 +1,5 @@
-import { AdminLayout } from './components/layout/AdminLayout'
-import { DashboardShell } from './features/dashboard/components/DashboardShell'
+﻿import AppRoutes from "./routes/AppRoutes";
 
-function App() {
-  return (
-    <AdminLayout>
-      <DashboardShell />
-    </AdminLayout>
-  )
+export default function App() {
+  return <AppRoutes />;
 }
-
-export default App

@@ -1,43 +1,28 @@
-import { clsx } from 'clsx'
-import type { ButtonHTMLAttributes, ReactNode } from 'react'
+﻿import type { ButtonHTMLAttributes } from "react";
 
-type ButtonVariant = 'primary' | 'secondary' | 'ghost'
-type ButtonSize = 'sm' | 'md' | 'lg'
+type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
+  variant?: "primary" | "secondary" | "danger" | "ghost";
+};
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-    children: ReactNode
-    variant?: ButtonVariant
-    size?: ButtonSize
-}
-
-export function Button({
-    children,
-    variant = 'primary',
-    size = 'md',
-    className,
-    ...props
+export default function Button({
+  children,
+  variant = "primary",
+  className = "",
+  ...props
 }: ButtonProps) {
-    const baseStyles =
-        'inline-flex items-center justify-center rounded-xl font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-violet-500/40 disabled:cursor-not-allowed disabled:opacity-60'
+  const variants = {
+    primary: "bg-blue-600 text-white hover:bg-blue-700",
+    secondary: "bg-gray-100 text-gray-700 hover:bg-gray-200",
+    danger: "bg-red-600 text-white hover:bg-red-700",
+    ghost: "bg-transparent text-gray-600 hover:bg-gray-100",
+  };
 
-    const variants: Record<ButtonVariant, string> = {
-        primary: 'bg-slate-900 text-white hover:bg-slate-800',
-        secondary: 'border border-slate-200 bg-white text-slate-700 hover:bg-slate-50',
-        ghost: 'text-violet-600 hover:bg-violet-50',
-    }
-
-    const sizes: Record<ButtonSize, string> = {
-        sm: 'px-3 py-1.5 text-sm',
-        md: 'px-4 py-2.5 text-sm',
-        lg: 'px-5 py-3 text-base',
-    }
-
-    return (
-        <button
-            {...props}
-            className={clsx(baseStyles, variants[variant], sizes[size], className)}
-        >
-            {children}
-        </button>
-    )
+  return (
+    <button
+      className={`inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm font-medium transition disabled:cursor-not-allowed disabled:opacity-50 ${variants[variant]} ${className}`}
+      {...props}
+    >
+      {children}
+    </button>
+  );
 }
